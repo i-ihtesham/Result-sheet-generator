@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+
+  <h2>MarkSheet Form</h2>
+
+  <form method="post" id="markSheetForm" data-courses-url="{% url 'result:ajax_load_courses' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form|crispy }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="{% url 'home' %}">Nevermind</a>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_student").change(function () {
+      var url = $("#markSheetForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var studentId = $(this).val();  // get the selected student ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load_courses/)
+        data: {
+          'student': studentId       // add the student id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#id_course").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+{%endblock%}
