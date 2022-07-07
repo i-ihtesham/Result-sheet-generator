@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'sms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'graph',
+        'NAME': '*', #add name of sql table
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': 'misbah+123',
+        'PASSWORD': '*', # add your password
     }
 }
 
